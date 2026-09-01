@@ -27,4 +27,53 @@ document.addEventListener('DOMContentLoaded', function () {
   // footer year
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
+
+  // Lead form: email (Formspree) + WhatsApp, no page break
+  var form = document.getElementById('leadForm');
+  if (form) {
+    var WA_NUMBER = '918130283848';
+    var msg = document.getElementById('formMsg');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type=submit]');
+      var data = {
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        business: form.business.value.trim(),
+        need: form.need.value,
+        message: form.message.value.trim()
+      };
+      if (!data.name || !data.phone) { return; }
+
+      btn.disabled = true; btn.textContent = 'Sending...';
+
+      // 1) Email via Formspree (AJAX - page break nahi)
+      fetch(form.dataset.formspree, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).catch(function(){/* email fail ho to bhi WhatsApp chalega */})
+      .finally(function () {
+        // 2) WhatsApp pre-filled message
+        var text = 'Hi LaunchLocal! Meri details:%0A' +
+          'Naam: ' + encodeURIComponent(data.name) + '%0A' +
+          'Phone: ' + encodeURIComponent(data.phone) + '%0A' +
+          'Business: ' + encodeURIComponent(data.business || '-') + '%0A' +
+          'Chahiye: ' + encodeURIComponent(data.need) + '%0A' +
+          'Message: ' + encodeURIComponent(data.message || '-');
+        var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + text;
+
+        // 3) success message + open WhatsApp
+        if (msg) {
+          msg.style.display = 'block';
+          msg.style.color = '#00d4b3';
+          msg.innerHTML = '✅ Details bhej di! WhatsApp khul raha hai... na khule to ' +
+            '<a href="' + waUrl + '" style="color:#4f7cff">yahan click karo</a>.';
+        }
+        form.reset();
+        btn.disabled = false; btn.textContent = 'Send & Get Free Demo';
+        window.open(waUrl, '_blank');
+      });
+    });
+  }
 });

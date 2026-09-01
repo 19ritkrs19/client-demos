@@ -45,8 +45,8 @@
       <a class="btn btn-primary" style="margin-top:6px" href="https://wa.me/918130283848?text=Hi%20LaunchLocal,%20mujhe%20website%20chahiye">💬 Chat on WhatsApp</a>
     </div>
 
-    <!-- Formspree: signup pe form ID milega, YOUR_FORM_ID ki jagah daalo -->
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="reveal">
+    <!-- Submit -> email (Formspree AJAX) + WhatsApp open + success msg -->
+    <form id="leadForm" class="reveal" data-formspree="https://formspree.io/f/xeaqadyy">
       <label>Aapka naam *</label>
       <input type="text" name="name" placeholder="Naam" required />
       <label>Phone / WhatsApp *</label>
@@ -65,6 +65,7 @@
       <label>Message (optional)</label>
       <textarea name="message" placeholder="Thoda detail me batayein..."></textarea>
       <button type="submit" class="btn btn-primary">Send &amp; Get Free Demo</button>
+      <p id="formMsg" style="margin-top:16px;display:none;font-weight:600"></p>
     </form>
   </div>
 </section>
