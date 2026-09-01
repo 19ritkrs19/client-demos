@@ -55,11 +55,11 @@ document.addEventListener('DOMContentLoaded', function () {
       }).catch(function(){/* email fail ho to bhi WhatsApp chalega */})
       .finally(function () {
         // 2) WhatsApp pre-filled message
-        var text = 'Hi LaunchLocal! Meri details:%0A' +
-          'Naam: ' + encodeURIComponent(data.name) + '%0A' +
+        var text = 'Hi LaunchLocal! My details:%0A' +
+          'Name: ' + encodeURIComponent(data.name) + '%0A' +
           'Phone: ' + encodeURIComponent(data.phone) + '%0A' +
           'Business: ' + encodeURIComponent(data.business || '-') + '%0A' +
-          'Chahiye: ' + encodeURIComponent(data.need) + '%0A' +
+          'Need: ' + encodeURIComponent(data.need) + '%0A' +
           'Message: ' + encodeURIComponent(data.message || '-');
         var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + text;
 
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (msg) {
           msg.style.display = 'block';
           msg.style.color = '#00d4b3';
-          msg.innerHTML = '✅ Details bhej di! WhatsApp khul raha hai... na khule to ' +
-            '<a href="' + waUrl + '" style="color:#4f7cff">yahan click karo</a>.';
+          msg.innerHTML = '✅ Details sent! Opening WhatsApp... if it does not open, ' +
+            '<a href="' + waUrl + '" style="color:#4f7cff">click here</a>.';
         }
         form.reset();
         btn.disabled = false; btn.textContent = 'Send & Get Free Demo';
